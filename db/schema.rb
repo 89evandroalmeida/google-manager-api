@@ -10,13 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170102190924) do
+ActiveRecord::Schema.define(version: 20170102192041) do
 
   create_table "internal_users", force: :cascade do |t|
     t.string   "name"
     t.string   "api_key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "primary_email"
+    t.string   "full_name"
+    t.boolean  "is_admin"
+    t.datetime "last_login_time"
+    t.datetime "creation_time"
+    t.boolean  "suspended"
+    t.string   "customer_id"
+    t.string   "org_unit_path"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end
