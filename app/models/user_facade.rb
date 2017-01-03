@@ -33,4 +33,17 @@ class UserFacade
     results
   end
 
+  def self.update_user_status params
+    request = {
+      :api_method  => @@api.users.update,
+      :parameters  => {
+        :userKey     => params[:userKey]
+      },
+      :body_object => {
+        :suspended   => params[:suspended]
+      }
+    }
+    @@client.execute(request).data
+  end
+
 end

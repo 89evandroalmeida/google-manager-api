@@ -1,9 +1,17 @@
 class Api::V1::UsersController < Api::ApiController
-  respond_to :json
   before_action :authenticate
 
   def index
-    respond_with UserFacade.read_users(params)
+    begin
+      expected_params = [ :domain ]
+      ActionController::Parameters.new(params)
+        .permit(expected_params)
+        .require(expected_params)
+
+      render json: UserFacade.read_users(params)
+    rescue Exception => e
+      render json: e
+    end
   end
 
   def create
@@ -18,10 +26,26 @@ class Api::V1::UsersController < Api::ApiController
       ActionController::Parameters.new(params)
         .permit(expected_params)
         .require(expected_params)
-      respond_with UserFacade.create_user(params), :location => nil
-      # ":location => nil" avoids redirection after POST
+
+      render json: UserFacade.create_user(params)
     rescue Exception => e
-      respond_with e, :location => nil
+      render json: e
+    end
+  end
+
+  def update
+    begin
+      expected_params = [
+        :userKey,
+        :suspended
+      ]
+      ActionController::Parameters.new(params)
+        .permit(expected_params)
+        .require(expected_params)
+
+      render json: UserFacade.update_user_status(params)
+    rescue Exception => e
+      render json: e
     end
   end
 
