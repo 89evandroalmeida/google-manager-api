@@ -54,3 +54,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'google-api-client', '<0.9'
 gem 'figaro'
+
+group :production do
+  gem 'unicorn'
+  gem 'foreman'
+end
